@@ -1,0 +1,53 @@
+package com.batuhankiltac.emlakburadaadvert.model;
+
+import com.batuhankiltac.emlakburadaadvert.model.enums.AdvertType;
+import com.batuhankiltac.emlakburadaadvert.model.enums.RealEstateType;
+import com.batuhankiltac.emlakburadaadvert.model.enums.StatusType;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "adverts")
+@Builder
+@EqualsAndHashCode
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class Advert {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private Long userId;
+    private Long advertNo;
+
+    @Enumerated(value = EnumType.STRING)
+    private AdvertType advertType;
+
+    @Enumerated(value = EnumType.STRING)
+    private RealEstateType realEstateType;
+
+    @Enumerated(value = EnumType.STRING)
+    private StatusType statusType = StatusType.IN_REVIEW;
+
+    private String title;
+    private String description;
+    private String province;
+    private String district;
+    private Long price;
+    private String rooms;
+    private Integer size;
+    private Integer buildingAge;
+    private Integer floor;
+    private Date createdDate = new Date();
+
+    @OneToMany
+    private List<Image> images = new ArrayList<>();
+}
