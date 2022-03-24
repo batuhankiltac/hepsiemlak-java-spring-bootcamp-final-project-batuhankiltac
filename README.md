@@ -19,7 +19,7 @@ Exception and Log mechanisms are also used in the project.
 ---
 ## TECHNOLOGICAL DETAILS
 * Java 11
-* JUnit 5
+* JUnit
 * Spring
 * Maven
 * Restfull
