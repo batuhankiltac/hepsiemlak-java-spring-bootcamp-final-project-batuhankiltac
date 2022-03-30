@@ -4,11 +4,13 @@
 ## SUMMARY
 This project includes restful services of the web application named Emlakburada. It is written using the Spring framework. With this application, which was created using the Microservice architecture, the following can be done:
 
-* Advert -> get/post/put/delete
-* User -> get/post/put/delete
-* Product -> get/post
-* Banner -> get/post/put/delete
-* Payment -> post
+```
+ADVERT  -> GET / POST / PUT / DELETE
+USER    -> GET / POST / PUT / DELETE
+PRODUCT -> GET / POST /  -  /   -
+BANNER  -> GET / POST / PUT / DELETE
+PAYMENT ->  -  / POST /  -  /   -
+```
 
 The project also includes AuthN/AuthZ service , API Gateway and Service Discovery.
 
