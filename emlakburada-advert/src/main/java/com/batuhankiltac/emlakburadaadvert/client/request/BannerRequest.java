@@ -11,5 +11,5 @@ public class BannerRequest {
     private Long advertNo;
     private String title;
     private String phone;
-    private Integer quantity;
+    private Integer quantity
 }
