@@ -14,7 +14,7 @@ import java.util.function.Function;
 @Component
 @Slf4j
 public class JwtUtil {
-    private static final String SECRET_KEY = "hepsiemlak-patika-secret-key-hepsiemlak-patika-secret-key-key-hepsiemlak-patika-secret-key";
+    private static final String SECRET_KEY = "emlak-patika-secret-key-emlak-patika-secret-key-key-emlak-patika-secret-key";
     private Key key;
 
     @PostConstruct

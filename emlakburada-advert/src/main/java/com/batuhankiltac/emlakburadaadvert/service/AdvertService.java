@@ -7,11 +7,12 @@ import com.batuhankiltac.emlakburadaadvert.dto.AdvertRequest;
 import com.batuhankiltac.emlakburadaadvert.dto.AdvertResponse;
 import com.batuhankiltac.emlakburadaadvert.exception.QuantityNotFoundException;
 import com.batuhankiltac.emlakburadaadvert.exception.UserNotFoundException;
-import com.batuhankiltac.emlakburadaadvert.mapper.AdvertMapper;
+import com.batuhankiltac.emlakburadaadvert.converter.AdvertConverter;
 import com.batuhankiltac.emlakburadaadvert.model.Advert;
 import com.batuhankiltac.emlakburadaadvert.model.enums.StatusType;
 import com.batuhankiltac.emlakburadaadvert.queue.RabbitMqService;
 import com.batuhankiltac.emlakburadaadvert.repository.AdvertRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,26 +23,18 @@ import java.util.List;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class AdvertService {
     private final AdvertRepository advertRepository;
-    private final AdvertMapper advertMapper;
+    private final AdvertConverter advertConverter;
     private final BannerClient bannerClient;
     private final UserClient userClient;
     private final RabbitMqService rabbitMqService;
 
-    @Autowired
-    public AdvertService(AdvertRepository advertRepository, AdvertMapper advertMapper, BannerClient bannerClient, UserClient userClient, RabbitMqService rabbitMqService) {
-        this.advertRepository = advertRepository;
-        this.advertMapper = advertMapper;
-        this.bannerClient = bannerClient;
-        this.userClient = userClient;
-        this.rabbitMqService = rabbitMqService;
-    }
-
     public List<AdvertResponse> getAll() {
         List<AdvertResponse> advertList = new ArrayList<>();
         for (Advert advert : advertRepository.findAll()) {
-            advertList.add(advertMapper.toDto(advert));
+            advertList.add(advertConverter.toDto(advert));
         }
         log.info("Listed all users.");
         return advertList;
@@ -50,7 +43,7 @@ public class AdvertService {
     public List<AdvertResponse> getAllByUserIdAndStatusTypeActive(Long userId) {
         List<AdvertResponse> activeList = new ArrayList<>();
         for (Advert advert : advertRepository.findAllByUserIdAndStatusType(userId, StatusType.ACTIVE)) {
-            activeList.add(advertMapper.toDto(advert));
+            activeList.add(advertConverter.toDto(advert));
         }
         return activeList;
     }
@@ -58,7 +51,7 @@ public class AdvertService {
     public List<AdvertResponse> getAllByUserIdAndStatusTypePassive(Long userId) {
         List<AdvertResponse> activeList = new ArrayList<>();
         for (Advert advert : advertRepository.findAllByUserIdAndStatusType(userId, StatusType.PASSIVE)) {
-            activeList.add(advertMapper.toDto(advert));
+            activeList.add(advertConverter.toDto(advert));
         }
         return activeList;
     }
@@ -66,19 +59,19 @@ public class AdvertService {
     public List<AdvertResponse> getAllByUserId(Long id) {
         List<AdvertResponse> advertList = new ArrayList<>();
         for (Advert advert : advertRepository.getAllByUserId(id)) {
-            advertList.add(advertMapper.toDto(advert));
+            advertList.add(advertConverter.toDto(advert));
         }
         return advertList;
     }
 
     public AdvertResponse getById(Long id) {
-        return advertMapper.toDto(advertRepository.getById(id));
+        return advertConverter.toDto(advertRepository.getById(id));
     }
 
     public AdvertResponse add(AdvertRequest advertRequest) {
         if (userClient.getById(advertRequest.getUserId()) != null) {
             if (userClient.getIdIfQuantityExist(advertRequest.getUserId()) != null) {
-                Advert advert = advertMapper.toEntity(advertRequest);
+                Advert advert = advertConverter.toEntity(advertRequest);
                 BannerRequest bannerRequest = new BannerRequest();
                 bannerRequest.setAdvertNo(advertRequest.getAdvertNo());
                 bannerRequest.setTitle(advertRequest.getTitle());
@@ -86,10 +79,10 @@ public class AdvertService {
                 Advert adv = advertRepository.save(advert);
                 rabbitMqService.sendToQueue(adv.getId());
                 log.info("Advert has been created.");
-                return advertMapper.toDto(adv);
+                return advertConverter.toDto(adv);
             } else {
                 log.info("User has not enough quantity!");
-                throw new QuantityNotFoundException("Quantity not found!");
+                throw new QuantityNotFoundException("User has not enough quantity!");
             }
         } else {
             log.info("User ID not found!");
@@ -107,18 +100,19 @@ public class AdvertService {
                 .description(advertRequest.getDescription())
                 .build();
         log.info("Advert has been updated!");
-        return advertMapper.toDto(advertRepository.save(advert));
+        return advertConverter.toDto(advertRepository.save(advert));
     }
 
-    public ResponseEntity<String> deleteById(Long id) {
+    public void deleteById(Long id) {
         getById(id);
         advertRepository.deleteById(id);
-        return ResponseEntity.ok("Advert has been deleted.");
+        log.info("Advert has been deleted.");
     }
 
     public void changeStatus(Long id) {
         Advert advert = advertRepository.getById(id);
         advert.setStatusType(StatusType.ACTIVE);
+        log.info("Advert status has been changed to " + advert.getStatusType());
         advertRepository.save(advert);
     }
 
@@ -129,6 +123,6 @@ public class AdvertService {
         } else {
             advert.setStatusType(StatusType.ACTIVE);
         }
-        return advertMapper.toDto(advertRepository.save(advert));
+        return advertConverter.toDto(advertRepository.save(advert));
     }
 }

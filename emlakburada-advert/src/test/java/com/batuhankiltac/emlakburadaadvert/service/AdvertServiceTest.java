@@ -4,7 +4,7 @@ import com.batuhankiltac.emlakburadaadvert.client.BannerClient;
 import com.batuhankiltac.emlakburadaadvert.client.UserClient;
 import com.batuhankiltac.emlakburadaadvert.dto.AdvertRequest;
 import com.batuhankiltac.emlakburadaadvert.dto.AdvertResponse;
-import com.batuhankiltac.emlakburadaadvert.mapper.AdvertMapper;
+import com.batuhankiltac.emlakburadaadvert.converter.AdvertConverter;
 import com.batuhankiltac.emlakburadaadvert.model.Advert;
 import com.batuhankiltac.emlakburadaadvert.queue.RabbitMqService;
 import com.batuhankiltac.emlakburadaadvert.repository.AdvertRepository;
@@ -32,7 +32,7 @@ public class AdvertServiceTest {
     private AdvertRepository advertRepository;
 
     @Mock
-    private AdvertMapper advertMapper;
+    private AdvertConverter advertConverter;
 
     @Mock
     private BannerClient bannerClient;
@@ -81,11 +81,11 @@ public class AdvertServiceTest {
                 .thenReturn(prepareList());
 
         Mockito
-                .when(advertMapper.toDto(prepare()))
+                .when(advertConverter.toDto(prepare()))
                 .thenReturn(prepareResponse());
 
         Mockito
-                .when(advertMapper.toEntity(prepareRequest()))
+                .when(advertConverter.toEntity(prepareRequest()))
                 .thenReturn(prepare());
 
         List<AdvertResponse> responseList = advertService.getAll();

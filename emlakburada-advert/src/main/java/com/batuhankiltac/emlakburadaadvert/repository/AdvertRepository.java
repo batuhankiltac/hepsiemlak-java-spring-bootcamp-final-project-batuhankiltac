@@ -10,6 +10,5 @@ import java.util.List;
 @Repository
 public interface AdvertRepository extends JpaRepository<Advert, Long> {
     List<Advert> getAllByUserId(Long id);
-
     List<Advert> findAllByUserIdAndStatusType(Long userId, StatusType statusType);
 }

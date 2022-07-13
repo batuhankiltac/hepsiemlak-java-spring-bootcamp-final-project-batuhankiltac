@@ -4,6 +4,7 @@ import com.batuhankiltac.emlakburadauser.dto.request.UserRequest;
 import com.batuhankiltac.emlakburadauser.dto.response.UserResponse;
 import com.batuhankiltac.emlakburadauser.model.Product;
 import com.batuhankiltac.emlakburadauser.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,22 +13,18 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
 
-    @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
-
     @GetMapping(value = "/users")
-    public ResponseEntity<List<UserResponse>> getAll(){
-        return new ResponseEntity<>(userService.getAll(), HttpStatus.OK);
+    public List<UserResponse> getAll(){
+        return userService.getAll();
     }
 
     @GetMapping(value = "/users/{id}")
-    public ResponseEntity<UserResponse> getById(@PathVariable Long id) {
-        return new ResponseEntity<>(userService.getById(id), HttpStatus.OK);
+    public UserResponse getById(@PathVariable Long id) {
+        return userService.getById(id);
     }
 
     @GetMapping(value = "/users/getIdIfQuantityExist/{userId}")
@@ -35,28 +32,28 @@ public class UserController {
         return userService.getIdIfQuantityExist(userId);
     }
 
-    @GetMapping(value = "/users/products/{userId}")
-    public ResponseEntity<List<Product>> getPackagesByUserId(@PathVariable Long userId) {
-        return new ResponseEntity<>(userService.getPackagesByUserId(userId), HttpStatus.OK);
+    @GetMapping(value = "/users/packages/{userId}")
+    public List<Product> getPackagesByUserId(@PathVariable Long userId) {
+        return userService.getPackagesByUserId(userId);
     }
 
     @PostMapping(value = "/users")
-    public ResponseEntity<UserResponse> add(@RequestBody UserRequest userRequest) {
-        return new ResponseEntity<>(userService.add(userRequest), HttpStatus.CREATED);
+    public UserResponse add(@RequestBody UserRequest userRequest) {
+        return userService.add(userRequest);
     }
 
     @PutMapping(value = "/users")
-    public ResponseEntity<UserResponse> update(@RequestBody UserRequest userRequest) {
-        return new ResponseEntity<>(userService.update(userRequest), HttpStatus.OK);
+    public UserResponse update(@RequestBody UserRequest userRequest) {
+        return userService.update(userRequest);
     }
 
     @PutMapping(value = "/users/{userId}/products/{productId}")
-    public ResponseEntity<UserResponse> updateQuantitiesAndDates(@PathVariable Long userId, @PathVariable Long productId) {
-        return new ResponseEntity<>(userService.updateQuantitiesAndDates(userId, productId), HttpStatus.OK);
+    public UserResponse updateQuantitiesAndDates(@PathVariable Long userId, @PathVariable Long productId) {
+        return userService.updateQuantitiesAndDates(userId, productId);
     }
 
     @DeleteMapping(value = "/users/{id}")
-    public ResponseEntity<?> deleteById(@PathVariable Long id) {
-        return new ResponseEntity<>(userService.deleteById(id), HttpStatus.OK);
+    public void deleteById(@PathVariable Long id) {
+        userService.deleteById(id);
     }
 }

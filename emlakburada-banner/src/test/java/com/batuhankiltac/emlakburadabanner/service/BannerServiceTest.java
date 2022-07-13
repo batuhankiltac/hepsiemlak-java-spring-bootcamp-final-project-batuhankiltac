@@ -2,7 +2,7 @@ package com.batuhankiltac.emlakburadabanner.service;
 
 import com.batuhankiltac.emlakburadabanner.dto.BannerRequest;
 import com.batuhankiltac.emlakburadabanner.dto.BannerResponse;
-import com.batuhankiltac.emlakburadabanner.mapper.BannerMapper;
+import com.batuhankiltac.emlakburadabanner.converter.BannerConverter;
 import com.batuhankiltac.emlakburadabanner.model.Banner;
 import com.batuhankiltac.emlakburadabanner.repository.BannerRepository;
 import org.junit.jupiter.api.Test;
@@ -30,7 +30,7 @@ public class BannerServiceTest {
     private BannerRepository bannerRepository;
 
     @Mock
-    private BannerMapper bannerMapper;
+    private BannerConverter bannerConverter;
 
 
     private Banner prepare() {
@@ -69,7 +69,7 @@ public class BannerServiceTest {
                 .thenReturn(prepare());
 
         Mockito
-                .when(bannerMapper.toDto(prepare()))
+                .when(bannerConverter.toDto(prepare()))
                 .thenReturn(prepareResponse());
 
         BannerResponse bannerResponse = bannerService.add(bannerRequest);
@@ -85,7 +85,7 @@ public class BannerServiceTest {
                 .thenReturn(prepareBannerList());
 
         Mockito
-                .when(bannerMapper.toDto(prepare()))
+                .when(bannerConverter.toDto(prepare()))
                 .thenReturn(prepareResponse());
 
         assertEquals(0, bannerResponseList.size());

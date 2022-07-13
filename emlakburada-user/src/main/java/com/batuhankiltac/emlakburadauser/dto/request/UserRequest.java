@@ -1,11 +1,14 @@
 package com.batuhankiltac.emlakburadauser.dto.request;
 
 import com.batuhankiltac.emlakburadauser.model.enums.UserType;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 
-@Data
+@Getter
+@Setter
 public class UserRequest {
+
     private Long id;
     private UserType userType;
     private String name;

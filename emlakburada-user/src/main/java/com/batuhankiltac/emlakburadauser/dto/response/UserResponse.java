@@ -3,14 +3,17 @@ package com.batuhankiltac.emlakburadauser.dto.response;
 import com.batuhankiltac.emlakburadauser.model.Message;
 import com.batuhankiltac.emlakburadauser.model.Product;
 import com.batuhankiltac.emlakburadauser.model.enums.UserType;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 public class UserResponse {
+
     private Long id;
     private UserType userType;
     private String name;

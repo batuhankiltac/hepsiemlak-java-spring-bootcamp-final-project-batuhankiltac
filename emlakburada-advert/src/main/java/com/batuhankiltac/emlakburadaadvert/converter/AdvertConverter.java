@@ -1,4 +1,4 @@
-package com.batuhankiltac.emlakburadaadvert.mapper;
+package com.batuhankiltac.emlakburadaadvert.converter;
 
 import com.batuhankiltac.emlakburadaadvert.dto.AdvertRequest;
 import com.batuhankiltac.emlakburadaadvert.dto.AdvertResponse;
@@ -8,7 +8,7 @@ import org.mapstruct.Mapper;
 import java.util.Date;
 
 @Mapper(componentModel = "spring")
-public class AdvertMapper {
+public class AdvertConverter {
     private Long advertNo = 12344321L;
     private final Date date = new Date();
 

@@ -2,7 +2,7 @@ package com.batuhankiltac.emlakburadapayment.service;
 
 import com.batuhankiltac.emlakburadapayment.dto.PaymentRequest;
 import com.batuhankiltac.emlakburadapayment.dto.PaymentResponse;
-import com.batuhankiltac.emlakburadapayment.mapper.PaymentMapper;
+import com.batuhankiltac.emlakburadapayment.converter.PaymentConverter;
 import com.batuhankiltac.emlakburadapayment.model.Payment;
 import com.batuhankiltac.emlakburadapayment.queue.RabbitMqService;
 import com.batuhankiltac.emlakburadapayment.repository.PaymentRepository;
@@ -24,7 +24,7 @@ public class PaymentServiceTest {
     private PaymentService paymentService;
 
     @Mock
-    private PaymentMapper paymentMapper;
+    private PaymentConverter paymentConverter;
 
     @Mock
     private RabbitMqService rabbitMqService;
@@ -46,7 +46,7 @@ public class PaymentServiceTest {
                 .thenReturn(preparePayment());
 
         Mockito
-                .when(paymentMapper.toDto(preparePayment()))
+                .when(paymentConverter.toDto(preparePayment()))
                 .thenReturn(preparePaymentResponse());
 
         PaymentResponse paymentResponse = paymentService.add(paymentRequest);

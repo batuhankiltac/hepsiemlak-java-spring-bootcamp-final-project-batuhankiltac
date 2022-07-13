@@ -1,9 +1,12 @@
 package com.batuhankiltac.emlakburadabanner.dto;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class BannerResponse {
+
     private Long advertNo;
     private String title;
     private String phone;

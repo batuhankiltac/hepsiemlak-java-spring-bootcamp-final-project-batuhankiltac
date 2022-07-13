@@ -2,6 +2,7 @@ package com.batuhankiltac.emlakburadagateway.filter;
 
 import com.batuhankiltac.emlakburadagateway.util.JwtUtil;
 import io.jsonwebtoken.Claims;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
@@ -20,14 +21,10 @@ import java.util.Objects;
 
 @Component
 @Slf4j
+@RequiredArgsConstructor
 public class JwtFilter implements GatewayFilter {
     private static final String AUTHORIZATION = "Authorization";
     private final JwtUtil jwtUtil;
-
-    @Autowired
-    public JwtFilter(JwtUtil jwtUtil) {
-        this.jwtUtil = jwtUtil;
-    }
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {

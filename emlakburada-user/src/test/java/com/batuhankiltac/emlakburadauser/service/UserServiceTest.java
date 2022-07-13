@@ -2,7 +2,7 @@ package com.batuhankiltac.emlakburadauser.service;
 
 import com.batuhankiltac.emlakburadauser.dto.request.UserRequest;
 import com.batuhankiltac.emlakburadauser.dto.response.UserResponse;
-import com.batuhankiltac.emlakburadauser.mapper.UserMapper;
+import com.batuhankiltac.emlakburadauser.converter.UserConverter;
 import com.batuhankiltac.emlakburadauser.model.User;
 import com.batuhankiltac.emlakburadauser.model.enums.UserType;
 import com.batuhankiltac.emlakburadauser.repository.ProductRepository;
@@ -35,7 +35,7 @@ public class UserServiceTest {
     private ProductRepository productRepository;
 
     @Mock
-    private UserMapper userMapper;
+    private UserConverter userConverter;
 
     @Test
     void addTest() {
@@ -51,7 +51,7 @@ public class UserServiceTest {
                 .thenReturn(prepareUser());
 
         Mockito
-                .when(userMapper.toDto(prepareUser()))
+                .when(userConverter.toDto(prepareUser()))
                 .thenReturn(prepareUserResponse());
 
         UserResponse userResponse = userService.add(userRequest);
@@ -86,7 +86,7 @@ public class UserServiceTest {
 
 
         Mockito
-                .when(userMapper.toDto(prepareUser()))
+                .when(userConverter.toDto(prepareUser()))
                 .thenReturn(prepareUserResponse());
 
         assertEquals(0, responseList.size());

@@ -1,5 +1,7 @@
 package com.batuhankiltac.emlakburadapayment.config;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
@@ -13,9 +15,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import lombok.Data;
-
-@Data
+@Getter
+@Setter
 @Configuration
 public class RabbitMqConfig {
 

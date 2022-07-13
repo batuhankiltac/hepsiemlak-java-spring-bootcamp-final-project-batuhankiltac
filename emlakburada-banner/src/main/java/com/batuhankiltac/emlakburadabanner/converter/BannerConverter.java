@@ -1,4 +1,4 @@
-package com.batuhankiltac.emlakburadabanner.mapper;
+package com.batuhankiltac.emlakburadabanner.converter;
 
 import com.batuhankiltac.emlakburadabanner.dto.BannerRequest;
 import com.batuhankiltac.emlakburadabanner.dto.BannerResponse;
@@ -8,17 +8,8 @@ import org.mapstruct.Mapper;
 
 @Slf4j
 @Mapper(componentModel = "spring")
-public class BannerMapper {
+public class BannerConverter {
     private Long advertNo = 214324234L;
-
-    public Banner toEntity(BannerRequest bannerRequest) {
-        Banner banner = new Banner();
-        banner.setAdvertNo(advertNo++);
-        banner.setTitle(bannerRequest.getTitle());
-        banner.setPhone(bannerRequest.getPhone());
-        banner.setQuantity(bannerRequest.getQuantity());
-        return banner;
-    }
 
     public BannerResponse toDto(Banner banner) {
         BannerResponse bannerResponse = new BannerResponse();
@@ -27,5 +18,14 @@ public class BannerMapper {
         bannerResponse.setPhone(banner.getPhone());
         bannerResponse.setQuantity(banner.getQuantity());
         return bannerResponse;
+    }
+
+    public Banner toEntity(BannerRequest bannerRequest) {
+        Banner banner = new Banner();
+        banner.setAdvertNo(advertNo++);
+        banner.setTitle(bannerRequest.getTitle());
+        banner.setPhone(bannerRequest.getPhone());
+        banner.setQuantity(bannerRequest.getQuantity());
+        return banner;
     }
 }

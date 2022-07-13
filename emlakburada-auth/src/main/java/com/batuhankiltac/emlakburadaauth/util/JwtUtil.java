@@ -15,7 +15,7 @@ import java.util.Map;
 
 @Component
 public class JwtUtil {
-    private static final String SECRET_KEY = "hepsiemlak-patika-secret-key-hepsiemlak-patika-secret-key-key-hepsiemlak-patika-secret-key";
+    private static final String SECRET_KEY = "emlak-patika-secret-key-emlak-patika-secret-key-key-emlak-patika-secret-key";
     private static final Long EXPIRATION_TIME = 300000L;
     private Key key;
 
@@ -46,7 +46,6 @@ public class JwtUtil {
     }
 
     public String generateToken(User user) {
-
         Map<String, Object> claims = new HashMap<>();
         claims.put("userType", user.getUserType().toString());
         claims.put("email", user.getEmail());

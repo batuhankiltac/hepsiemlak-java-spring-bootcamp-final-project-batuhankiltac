@@ -1,4 +1,4 @@
-package com.batuhankiltac.emlakburadauser.mapper;
+package com.batuhankiltac.emlakburadauser.converter;
 
 import com.batuhankiltac.emlakburadauser.dto.request.UserRequest;
 import com.batuhankiltac.emlakburadauser.dto.response.UserResponse;
@@ -6,17 +6,7 @@ import com.batuhankiltac.emlakburadauser.model.User;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
-public class UserMapper {
-
-    public User toEntity(UserRequest userRequest) {
-        User user = new User();
-        user.setId(userRequest.getId());
-        user.setUserType(userRequest.getUserType());
-        user.setName(userRequest.getName());
-        user.setEmail(userRequest.getEmail());
-        user.setPassword(userRequest.getPassword());
-        return user;
-    }
+public class UserConverter {
 
     public UserResponse toDto(User user) {
         UserResponse userResponse = new UserResponse();
@@ -31,4 +21,15 @@ public class UserMapper {
         userResponse.setExpiredDate(user.getPackageExpiredDate());
         return userResponse;
     }
+
+    public User toEntity(UserRequest userRequest) {
+        User user = new User();
+        user.setId(userRequest.getId());
+        user.setUserType(userRequest.getUserType());
+        user.setName(userRequest.getName());
+        user.setEmail(userRequest.getEmail());
+        user.setPassword(userRequest.getPassword());
+        return user;
+    }
+
 }

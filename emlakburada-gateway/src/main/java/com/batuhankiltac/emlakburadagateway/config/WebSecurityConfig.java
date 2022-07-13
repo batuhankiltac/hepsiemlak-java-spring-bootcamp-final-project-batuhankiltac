@@ -1,7 +1,7 @@
 package com.batuhankiltac.emlakburadagateway.config;
 
 import com.batuhankiltac.emlakburadagateway.filter.JwtFilter;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
@@ -11,13 +11,9 @@ import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 
 @Configuration
+@RequiredArgsConstructor
 public class WebSecurityConfig {
     private final JwtFilter filter;
-
-    @Autowired
-    public WebSecurityConfig(JwtFilter filter) {
-        this.filter = filter;
-    }
 
     @Bean
     SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {

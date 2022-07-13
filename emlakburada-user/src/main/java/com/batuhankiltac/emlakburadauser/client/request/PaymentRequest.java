@@ -1,9 +1,12 @@
 package com.batuhankiltac.emlakburadauser.client.request;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class PaymentRequest {
+
     private Long userId;
     private Long productId;
     private Boolean isPay;

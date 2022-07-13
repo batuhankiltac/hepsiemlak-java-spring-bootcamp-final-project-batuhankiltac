@@ -1,4 +1,4 @@
-package com.batuhankiltac.emlakburadapayment.mapper;
+package com.batuhankiltac.emlakburadapayment.converter;
 
 import com.batuhankiltac.emlakburadapayment.dto.PaymentRequest;
 import com.batuhankiltac.emlakburadapayment.dto.PaymentResponse;
@@ -6,9 +6,8 @@ import com.batuhankiltac.emlakburadapayment.model.Payment;
 import lombok.extern.slf4j.Slf4j;
 import org.mapstruct.Mapper;
 
-@Slf4j
 @Mapper(componentModel = "spring")
-public class PaymentMapper {
+public class PaymentConverter {
     private Long orderNo = 98766789L;
 
     public PaymentResponse toDto(Payment payment) {

@@ -5,16 +5,19 @@ import com.batuhankiltac.emlakburadaadvert.model.enums.AdvertType;
 import com.batuhankiltac.emlakburadaadvert.model.enums.RealEstateType;
 import com.batuhankiltac.emlakburadaadvert.model.enums.StatusType;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Date;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class AdvertResponse {
+
     private Long id;
     private Long userId;
     private Long advertNo;

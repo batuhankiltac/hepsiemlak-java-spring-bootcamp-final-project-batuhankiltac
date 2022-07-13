@@ -1,11 +1,15 @@
 package com.batuhankiltac.emlakburadaauth.util;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class UserUtil {
 
-    private UserUtil() {}
+    private UserUtil() {
+
+    }
 
     public static boolean isValidPassword(String password, String password2) {
         return password.equals(password2);

@@ -1,16 +1,16 @@
 package com.batuhankiltac.emlakburadauser.service;
 
 //import com.batuhankiltac.emlakburadauser.client.PaymentClient;
+import com.batuhankiltac.emlakburadauser.converter.UserConverter;
 import com.batuhankiltac.emlakburadauser.dto.request.UserRequest;
 import com.batuhankiltac.emlakburadauser.dto.response.UserResponse;
 import com.batuhankiltac.emlakburadauser.exception.PaymentInvalidException;
-import com.batuhankiltac.emlakburadauser.mapper.UserMapper;
 import com.batuhankiltac.emlakburadauser.model.Product;
 import com.batuhankiltac.emlakburadauser.model.User;
 import com.batuhankiltac.emlakburadauser.repository.ProductRepository;
 import com.batuhankiltac.emlakburadauser.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -20,30 +20,24 @@ import java.util.List;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
-    private final UserMapper userMapper;
+    private final UserConverter userConverter;
     private final ProductRepository productRepository;
 
-    @Autowired
-    public UserService(UserRepository userRepository, UserMapper userMapper, ProductRepository productRepository) {
-        this.userRepository = userRepository;
-        this.userMapper = userMapper;
-        this.productRepository = productRepository;
-    }
-
     public List<UserResponse> getAll() {
-        List<UserResponse> userList = new ArrayList<>();
+        List<UserResponse> users = new ArrayList<>();
         for (User user : userRepository.findAll()) {
-            userList.add(userMapper.toDto(user));
+            users.add(userConverter.toDto(user));
         }
         log.info("Listed all users.");
-        return userList;
+        return users;
     }
 
     public UserResponse getById(Long id) {
         try {
-            return userMapper.toDto(userRepository.getById(id));
+            return userConverter.toDto(userRepository.getById(id));
         } catch (Exception exception) {
             exception.getMessage();
             return null;
@@ -67,9 +61,9 @@ public class UserService {
     }
 
     public UserResponse add(UserRequest userRequest) {
-        User user = userMapper.toEntity(userRequest);
+        User user = userConverter.toEntity(userRequest);
         log.info("User has been created.");
-        return userMapper.toDto(userRepository.save(user));
+        return userConverter.toDto(userRepository.save(user));
     }
 
     public UserResponse update(UserRequest userRequest) {
@@ -81,7 +75,7 @@ public class UserService {
                 .email(userRequest.getEmail())
                 .build();
         log.info("User has been updated.");
-        return userMapper.toDto(userRepository.save(user));
+        return userConverter.toDto(userRepository.save(user));
     }
 
     public UserResponse updateQuantitiesAndDates(Long userId, Long productId) {
@@ -98,15 +92,15 @@ public class UserService {
             product.addUserToProduct(user);
             user.addProductToUser(product);
             log.info("Package has been added to User.");
-            return userMapper.toDto(userRepository.save(user));
+            return userConverter.toDto(userRepository.save(user));
         } else {
             throw new PaymentInvalidException("Payment Invalid!");
         }
     }
 
-    public ResponseEntity<String> deleteById(Long id) {
+    public void deleteById(Long id) {
         getById(id);
         userRepository.deleteById(id);
-        return ResponseEntity.ok("User has been deleted.");
+        log.info("User has been deleted.");
     }
 }
