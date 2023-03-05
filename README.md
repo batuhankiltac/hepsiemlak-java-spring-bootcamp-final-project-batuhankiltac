@@ -25,7 +25,7 @@ Exception and Log mechanisms are also used in the project.
 * Spring
 * Maven
 * Restfull
-* MySQL
+* H2 Database
 * Hibernate
 * RabbitMQ
 * Feign Client
