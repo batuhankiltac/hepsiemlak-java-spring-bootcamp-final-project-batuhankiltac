@@ -24,7 +24,7 @@ Exception and Log mechanisms are also used in the project.
 * JUnit
 * Spring
 * Maven
-* Restfull
+* Restful
 * H2 Database
 * Hibernate
 * RabbitMQ
